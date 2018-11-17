@@ -1,8 +1,6 @@
 import json
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
-import dateutil
 
 
 
@@ -59,7 +57,7 @@ for i in recieved['Created']:
 
 columns = ['to', 'media type', 'created']
 
-json_path = '/Users/Sruthi/Desktop/mydata_1541693098862/json/snap_history.json'
+
 #sent_df = pd.DataFrame.from_dict(sent, orient = 'columns')
 sent_df = pd.DataFrame(sent, columns = ['To', 'Media Type', 'Created'] )
 recieved_df = pd.DataFrame(recieved, columns = ['From', 'Media Type', 'Created'] )
@@ -74,6 +72,3 @@ from_df = pd.DataFrame.from_dict(fromr,orient='index')
 created_df.sort_index(inplace=True)
 to_df.plot.bar()
 plt.show()
-#from_df.plot.bar()
-#plt.show()
-#print(created_df.head())
