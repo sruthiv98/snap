@@ -13,18 +13,23 @@ recieved_snap = data.get('Received Snap History')
 sent = {'To': [], 'Media Type': [], 'Created': []}
 recieved = {'From': [], 'Media Type': [], 'Created': []}
 
+#extracting the data from the JSON file for simpler use
 for i in range(len(sent_snap)):
     x = sent_snap[i]
     sent['To'].append(x.get('To'))
     sent['Media Type'].append(x.get('Media Type'))
     sent['Created'].append(x.get('Created')[:10])
 
+
+#aggregating values based on username
 to = {}
 for i in sent['To']:
     if i not in to:
         to[i] = 1
     else:
         to[i] += 1
+
+#aggregating values based on date of creation
 created = {}
 for i in sent['Created']:
     if i not in created:
@@ -32,42 +37,16 @@ for i in sent['Created']:
     if i in created:
         created[i] += 1
 
-for i in range(len(recieved_snap)):
-    x = recieved_snap[i]
-    recieved['From'].append(x.get('From'))
-    recieved['Media Type'].append(x.get('Media Type'))
-    recieved['Created'].append(x.get('Created')[:10])
-
-fromr = {}
-for i in recieved['From']:
-    if i not in to:
-        fromr[i] = 1
-    if i in fromr:
-        fromr[i] += 1
-
-createdr = {}
-for i in recieved['Created']:
-    if i not in createdr:
-        createdr[i] = 1
-    if i in created:
-        createdr[i] += 1
-
-
-
 
 columns = ['to', 'media type', 'created']
 
-
-#sent_df = pd.DataFrame.from_dict(sent, orient = 'columns')
-sent_df = pd.DataFrame(sent, columns = ['To', 'Media Type', 'Created'] )
-recieved_df = pd.DataFrame(recieved, columns = ['From', 'Media Type', 'Created'] )
-
+#turning dictionaries into data frames to assist with manipulation and visualization
 created_df = pd.DataFrame.from_dict(created,orient='index')
 to_df = pd.DataFrame.from_dict(to,orient='index')
 from_df = pd.DataFrame.from_dict(fromr,orient='index')
 
+#visualizing data in a simple barplot 
 
-#sent_df.sort_values('To')
 #created_df = created_df.sort_values(0,0)
 created_df.sort_index(inplace=True)
 to_df.plot.bar()
